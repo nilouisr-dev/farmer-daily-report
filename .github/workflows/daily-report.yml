@@ -2,23 +2,23 @@ name: Daily Farmer Report
 
 on:
   schedule:
-    # 07:30 Thai time (UTC+7) = 00:30 UTC
     - cron: '30 0 * * *'
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install requests beautifulsoup4
+
+      - name: Download report script
+        run: curl -L -o report.py "https://www.coze.cn/s/E2QgAcEUBmE/"
 
       - name: Generate and push report
         env:
